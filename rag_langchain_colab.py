@@ -2,12 +2,12 @@
 # Designed for Google Colab / Jupyter Notebook use
 
 # ============================
-# 🔧 Step 1: Install Dependencies
+#  Step 1: Install Dependencies
 # ============================
 !pip install langchain chromadb openai tiktoken
 
 # ============================
-# 📚 Step 2: Load Environment Variables
+# Step 2: Load Environment Variables
 # ============================
 import os
 from getpass import getpass
@@ -15,7 +15,7 @@ from getpass import getpass
 os.environ["OPENAI_API_KEY"] = getpass("Enter your OpenAI API key: ")
 
 # ============================
-# 📂 Step 3: Load Documents
+# Step 3: Load Documents
 # ============================
 from langchain.document_loaders import TextLoader
 from langchain.text_splitter import CharacterTextSplitter
@@ -32,13 +32,13 @@ docs = [
 documents = [TextLoader.from_text(text).load()[0] for text in docs]
 
 # ============================
-# ✂️ Step 4: Split into Chunks
+# ✂Step 4: Split into Chunks
 # ============================
 text_splitter = CharacterTextSplitter(chunk_size=300, chunk_overlap=50)
 chunks = text_splitter.split_documents(documents)
 
 # ============================
-# 📊 Step 5: Embed and Store
+# Step 5: Embed and Store
 # ============================
 from langchain.vectorstores import Chroma
 from langchain.embeddings import OpenAIEmbeddings
@@ -47,7 +47,7 @@ embedding_model = OpenAIEmbeddings()
 vectorstore = Chroma.from_documents(chunks, embedding_model)
 
 # ============================
-# 🤖 Step 6: Build RAG Chain
+# Step 6: Build RAG Chain
 # ============================
 from langchain.chat_models import ChatOpenAI
 from langchain.chains import RetrievalQA
@@ -60,7 +60,7 @@ rag_chain = RetrievalQA.from_chain_type(
 )
 
 # ============================
-# 💬 Step 7: Ask Questions
+#  Step 7: Ask Questions
 # ============================
 while True:
     query = input("\nAsk a KYC-related question (or type 'exit'): ")
@@ -73,6 +73,6 @@ while True:
         print("•", doc.page_content)
 
 # ============================
-# 📌 To Deploy on Streamlit (Optional)
+# To Deploy on Streamlit (Optional)
 # Copy this logic into a Streamlit app using st.text_input and st.write.
 # ============================
